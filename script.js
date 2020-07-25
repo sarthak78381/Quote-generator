@@ -28,13 +28,12 @@ async function getQuote() {
         const response = await fetch(proxyUrl + apiUrl);
         complete()
         const data = await response.json();
-        // throw new Error
         if (data.quoteAuthor) {
             authorText.innerText = data.quoteAuthor;
         } else {
             authorText.innerText = 'unknown';
         }
-        if (data.quoteText.length > 120) {
+        if (data.quoteText.length > 100) {
             quoteText.classList.add('long-quote');
         } else {
             quoteText.classList.remove('long-quote');
@@ -48,16 +47,18 @@ async function getQuote() {
         } else {
             quoteText.innerText = 'Sorry, unable to load Quotes';
             authorText.innerText = '';
+            console.log(error.message)
         }
     }
 }
 
 // error solving
-var count = 0; 
-
 function solve() {
-    count += 1;
-    return count;
+    let count = 0
+    return function() {
+        count += 1;
+        return count;
+    }
 }
 
 // Twitter function
